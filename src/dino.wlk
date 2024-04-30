@@ -13,7 +13,7 @@ object juego{
 		game.addVisual(dino)
 		game.addVisual(reloj)
 	
-		keyboard.space().onPressDo{ self.jugar()}
+		keyboard.space().onPressDo{ self.jugar() }
 		
 		game.onCollideDo(dino,{ obstaculo => obstaculo.chocar()})
 		
@@ -60,13 +60,17 @@ object reloj {
 	
 	method pasarTiempo() {
 		//COMPLETAR
+		tiempo = tiempo + 1
 	}
 	method iniciar(){
 		tiempo = 0
-		game.onTick(100,"tiempo",{self.pasarTiempo()})
+		active_event = true
+		game.onTick(100,"tiempo",{self.pasarTiempo()}, active_event)
 	}
 	method detener(){
 		//COMPLETAR
+		game.removeTickEvent('tiempo')
+		active_event = false
 	}
 }
 
@@ -126,6 +130,9 @@ object dino {
 	
 	method saltar(){
 		//COMPLETAR
+		keyboard.space().onPressDo{
+			self.subir()
+		}
 	}
 	
 	method subir(){
