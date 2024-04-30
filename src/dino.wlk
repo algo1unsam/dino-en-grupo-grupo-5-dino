@@ -72,6 +72,7 @@ object reloj {
 
 object cactus {
 	 
+	var d=true 
 	var position = self.posicionInicial()
 
 	method image() = "cactus.png"
@@ -81,18 +82,28 @@ object cactus {
 
 	method iniciar(){
 		position = self.posicionInicial()
-		game.onTick(velocidad,"moverCactus",{self.mover()})
+		game.onTick(velocidad,"moverCactus",{
+			if(d) {
+				self.mover()
+			}
+		})
 	}
 	
+	//LUCAS: metodo hace que la posicion sea una celda a la izquierda
 	method mover(){
-		//COMPLETAR
+		position=position.left(1)
 	}
 	
+	// llamo al metodo morir de dino
 	method chocar(){
-		//COMPLETAR
+		if(self.position()==dino.position()){
+			dino.morir()
+		}
 	}
+	
+	//LUCAS: cambio flag "d" (d de detener) para que no se mueva mas en metodo iniciar
     method detener(){
-		//COMPLETAR
+		d=false
 	}
 }
 
