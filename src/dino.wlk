@@ -98,6 +98,7 @@ object cactus {
 	method chocar(){
 		if(self.position()==dino.position()){
 			dino.morir()
+			self.detener()
 		}
 	}
 	
