@@ -65,12 +65,11 @@ object reloj {
 	method iniciar(){
 		tiempo = 0
 		active_event = true
-		game.onTick(100,"tiempo",{self.pasarTiempo()}, active_event)
+		game.onTick(100,"tiempo",{self.pasarTiempo()})
 	}
 	method detener(){
 		//COMPLETAR
 		game.removeTickEvent('tiempo')
-		active_event = false
 	}
 }
 
