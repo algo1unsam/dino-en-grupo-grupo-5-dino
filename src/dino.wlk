@@ -13,7 +13,7 @@ object juego{
 		game.addVisual(dino)
 		game.addVisual(reloj)
 	
-		keyboard.space().onPressDo{ self.jugar()}
+		keyboard.space().onPressDo{ self.jugar() }
 		
 		game.onCollideDo(dino,{ obstaculo => obstaculo.chocar()})
 		
@@ -60,18 +60,22 @@ object reloj {
 	
 	method pasarTiempo() {
 		//COMPLETAR
+		tiempo = tiempo + 1
 	}
 	method iniciar(){
 		tiempo = 0
+		active_event = true
 		game.onTick(100,"tiempo",{self.pasarTiempo()})
 	}
 	method detener(){
 		//COMPLETAR
+		game.removeTickEvent('tiempo')
 	}
 }
 
 object cactus {
 	 
+	var d=true 
 	var position = self.posicionInicial()
 
 	method image() = "cactus.png"
@@ -81,18 +85,29 @@ object cactus {
 
 	method iniciar(){
 		position = self.posicionInicial()
-		game.onTick(velocidad,"moverCactus",{self.mover()})
+		game.onTick(velocidad,"moverCactus",{
+			if(d) {
+				self.mover()
+			}
+		})
 	}
 	
+	//LUCAS: metodo hace que la posicion sea una celda a la izquierda
 	method mover(){
-		//COMPLETAR
+		position=position.left(1)
 	}
 	
+	// llamo al metodo morir de dino
 	method chocar(){
-		//COMPLETAR
+		if(self.position()==dino.position()){
+			dino.morir()
+			self.detener()
+		}
 	}
+	
+	//LUCAS: cambio flag "d" (d de detener) para que no se mueva mas en metodo iniciar
     method detener(){
-		//COMPLETAR
+		d=false
 	}
 }
 
@@ -114,6 +129,9 @@ object dino {
 	
 	method saltar(){
 		//COMPLETAR
+		keyboard.space().onPressDo{
+			self.subir()
+		}
 	}
 	
 	method subir(){
